@@ -170,27 +170,27 @@ while($row = mysqli_fetch_assoc($key_result)) $keys[] = $row['key_signature'];
 
                     <!-- Progress bar -->
                     <div class="w-full flex items-center space-x-3">
-                        <span id="currentTime" class="text-xs text-gray-400 w-12 text-right">0:00</span>
-                        
-                        <div class="flex-1 h-4 relative group cursor-pointer" id="progressBarContainer">
-                            <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-700 rounded-full -translate-y-1/2">
-                                <div id="progressBar" class="h-full bg-purple-600 w-0 relative">
-                                    <div class="absolute left-full top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-md transform -translate-x-1/2 hover:scale-110"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <span id="duration" class="text-xs text-gray-400 w-12">0:00</span>
-                    </div>
+    <span id="currentTime" class="text-xs text-gray-400 w-12 text-right">0:00</span>
+    
+    <div class="flex-1 h-4 relative group cursor-pointer"> <!-- Aumentata altezza -->
+        <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-700 rounded-full -translate-y-1/2 overflow-hidden">
+            <div id="progressBar" class="h-full bg-purple-600 w-0 relative transition-all">
+                <div class="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"></div>
+            </div>
+        </div>
+    </div>
+    
+    <span id="duration" class="text-xs text-gray-400 w-12">0:00</span>
+</div>
 
                 </div>
 
                 <!-- Volume e altri controlli -->
-                <div class="w-1/4 flex items-center justify-end space-x-4">
-                    <button id="shuffleBtn" class="text-gray-400 hover:text-white transition">
+                <div class="w-1/4 flex items-center justify-end space-x-4 hidden md:flex">
+                    <button id="shuffleBtn" class="text-gray-400 hover:text-white transition trasparent">
                         <i class="fas fa-random"></i>
                     </button>
-                    <button id="repeatBtn" class="text-gray-400 hover:text-white transition">
+                    <button id="repeatBtn" class="text-gray-400 hover:text-white transition trasparent">
                         <i class="fas fa-redo"></i>
                     </button>
                     <div class="flex items-center space-x-2">
@@ -304,33 +304,12 @@ while($row = mysqli_fetch_assoc($key_result)) $keys[] = $row['key_signature'];
             });
 
             // Click sulla progress bar
-            const progressBarContainer = document.getElementById('progressBarContainer');
-            progressBarContainer.addEventListener('click', (e) => {
-                const rect = progressBarContainer.getBoundingClientRect();
+            progressBar.parentElement.addEventListener('click', (e) => {
+                const rect = e.target.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const width = rect.width;
                 const percentage = x / width;
                 audioElement.currentTime = percentage * audioElement.duration;
-            });
-
-            // Aggiunta del drag and drop sulla progress bar
-            let isDragging = false;
-
-            progressBarContainer.addEventListener('mousedown', () => {
-                isDragging = true;
-            });
-
-            document.addEventListener('mousemove', (e) => {
-                if (isDragging) {
-                    const rect = progressBarContainer.getBoundingClientRect();
-                    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
-                    const percentage = x / rect.width;
-                    audioElement.currentTime = percentage * audioElement.duration;
-                }
-            });
-
-            document.addEventListener('mouseup', () => {
-                isDragging = false;
             });
 
             // Gestione Volume
