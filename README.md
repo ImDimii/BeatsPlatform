@@ -1,4 +1,4 @@
-# Beats - Sistema di Gestione Traccia Musicali
+# Beats - Sistema di Gestione Traccie Musicali
 
 ## Requisiti di Sistema
 - PHP 7.4 o superiore
