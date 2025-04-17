@@ -77,4 +77,4 @@ INSERT INTO site_settings (setting_key, setting_value) VALUES
 ('social_soundcloud', '#'); 
 
 -- Inserisco un utente admin di default (password: admin123)
-INSERT INTO users (username, password) VALUES ('dimi', 'Syri777.'); 
+INSERT INTO users (username, password) VALUES ('admin', 'admin123'); 
