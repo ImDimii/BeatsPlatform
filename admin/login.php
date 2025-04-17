@@ -1,5 +1,6 @@
 <?php
 require_once '../includes/auth.php';
+require_once '../config/database.php';
 
 // Se l'utente è già loggato come admin, redirect alla dashboard
 if (isAdmin()) {
@@ -14,14 +15,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
     
-    // Questi valori andrebbero salvati nel database in modo sicuro
-    // Per ora usiamo valori hardcoded solo per demo
-    if ($username === 'admin' && $password === 'admin123') {
-        login($username, true);
-        header('Location: index.php');
-        exit;
-    } else {
-        $error = 'Username o password non validi';
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+        $stmt->execute([$username, $password]);
+        $user = $stmt->fetch();
+        
+        if ($user) {
+            login($username, true);
+            header('Location: index.php');
+            exit;
+        } else {
+            $error = 'Username o password non validi';
+        }
+    } catch (PDOException $e) {
+        error_log("Errore nel login: " . $e->getMessage());
+        $error = 'Errore durante il login';
     }
 }
 ?>
