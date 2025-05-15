@@ -1,4 +1,5 @@
 # Beats - Sistema di Gestione Traccie Musicali
+![image](https://github.com/user-attachments/assets/e38982e6-a156-4cf5-9b50-46f261c1256e)
 
 ## Requisiti di Sistema
 - PHP 7.4 o superiore
@@ -172,4 +173,4 @@ tar -czf beats_backup.tar.gz /var/www/html/beats
 
 ## Supporto
 
-Per problemi o domande, aprire una issue su GitHub o contattare l'amministratore del sistema. 
+Per problemi o domande, aprire una issue su GitHub o contattarmi.
